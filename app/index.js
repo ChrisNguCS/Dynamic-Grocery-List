@@ -5,14 +5,18 @@ import { Stack, useRouter } from 'expo-router';
 import { COLORS, icons, images, SIZES } from '../constants';
 import { NearbyJobs, Popularjobs, ScreenHeaderBtn, Welcome} from '../components';
 import ListItem from '../components/listItem/ListItem.js';
-import styles from '../components/listItem/listItem.style'
-import Settings from "../assets/svg/settings.svg"
+import styles from '../components/listItem/listItem.style';
+import Settings from "../assets/svg/settings.svg";
+import AddItemIcon from '../assets/svg/addItemIcon.svg';
 
 const Home = () => {
 const router = useRouter();
 const [task, setTask] = useState();
 const [taskItems, setTaskItems] = useState([])
-
+const [toggle, setToggle] = useState(true);
+const toggleFunction = () => {
+  setToggle(!toggle);
+};
 const handleAddTask = () => {
     Keyboard.dismiss();
     setTaskItems([...taskItems, task])
@@ -41,19 +45,19 @@ return(
     />
 
 
-    <ScrollView 
+    <ScrollView
         contentContainerStyle = {{
             flexGrow: 1
         }}
         keyboardShouldPersistTaps='handled'
     >
 
-    //Header Section
+
       <View style={styles.tasksWrapper}>
       <Text style={styles.sectionTitle}>My List</Text>
         <View style = {styles.items}>
         {
-            //Complete item
+
             taskItems.map((item,index) => {
                 return (
                     <TouchableOpacity key = {index} onpress = {() => completeTask(index)}>
@@ -65,27 +69,23 @@ return(
         }
         </View>
         </View>
-
-        <View>
-            <ListItem text={'Task 1'}/>
-            <ListItem text = {'task 2'}/>
-        </View>
-
     </ScrollView>
 
 
     <KeyboardAvoidingView 
-    behavior={Platform.OS === "ios" ? "padding" : "height"}
-    style={styles.writeTaskWrapper}
+        keyboardVerticalOffset={60 + 47}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.writeTaskWrapper}
     >
+        <TextInput style={styles.input} placeholder={'Write a task'} placeholderTextColor="#B7B7B7"value={task} onChangeText={text => setTask(text)}/>
 
-        <TextInput style={styles.input} placeholder={'Write aasdf task'} placeholderTextColor='white' value={task} onChangeText={text => setTask(text)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
-            <View style={styles.addWrapper}>
-                <Text style={styles.addText}>+</Text>
-            </View>
+          <View style={styles.addWrapper}>
+            <AddItemIcon width = {60} height = {60}/>
+            {/* <Text style={styles.addText}>+</Text> */}
+          </View>
         </TouchableOpacity>
-            
+
     </KeyboardAvoidingView>
     </SafeAreaView>
     
