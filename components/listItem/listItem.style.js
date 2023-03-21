@@ -1,4 +1,7 @@
 import { StyleSheet } from "react-native";
+import { useFonts } from 'expo-font';
+
+
 
 const styles = StyleSheet.create({
 item: {
@@ -19,7 +22,8 @@ itemRight: {
 },
 container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    alignItems: 'center',
+    backgroundColor: '#FCFCFC',
   },
   tasksWrapper: {
     paddingTop: 20,
@@ -61,6 +65,23 @@ writeTaskWrapper: {
     borderWidth: 1,
   },
   addText: {},
+  LargeButton:{
+
+    backgroundColor: '#53B175',
+    padding: 25,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+    fontSize: 58,
+    width: '90%',
+  },
+  buttonText:{
+    fontFamily: 'Gilroy-SemiBold',
+    fontSize: 18,
+    color: "white",
+  },
 });
 
 export default styles;
