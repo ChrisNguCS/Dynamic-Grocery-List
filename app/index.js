@@ -1,18 +1,33 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { React, useEffect } from 'react';
 import { Stack, useRouter, Link } from 'expo-router';
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen'
 
 import LargeButton from '../components/button/LargeButton';
 import styles from '../components/listItem/listItem.style';
 
 
+
 const Home = () => {
 const router = useRouter();
 
-  const [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     "Gilroy-SemiBold": require("../assets/fonts/Gilroy-SemiBold.ttf")
-  }) 
+  });
+
+  useEffect(() => {
+    async function prepare(){
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  },[])
+
+  if (!fontsLoaded){
+    return undefined;
+  } else {
+    SplashScreen.hideAsync();
+  }
 
   return(
     <View style = {styles.container}>
@@ -22,15 +37,22 @@ const router = useRouter();
         headerShown: false,
       }}
       />
-
       <Image source={require('../assets/images/loginStockPhoto.png')}></Image>
-      {/* <TouchableOpacity onPress={() => } */}
-      <Link href={"/list"}>
-        <LargeButton text = {'Login'} />
+      <Link href="/login" asChild >
+        <TouchableOpacity>
+          <LargeButton text = {'Login'}/>
+        </TouchableOpacity>
       </Link>
-
-      <LargeButton text = {'Sign Up'}/>
-      <Text>hello</Text>
+      {/* <TouchableOpacity onPress={() => {
+        router.push("/list")
+      }}>
+          <LargeButton text = {'Login'} />
+      </TouchableOpacity> */}
+      <Link href="/signUp" asChild >
+        <TouchableOpacity>
+          <LargeButton text = {'Sign Up'}/>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 };
