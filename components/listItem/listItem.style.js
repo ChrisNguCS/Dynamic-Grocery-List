@@ -9,7 +9,7 @@ item: {
     padding: 15,
     borderRadius: 10,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
     marginBottom: 20,
     borderColor: "#53B175",
@@ -83,6 +83,12 @@ buttonText:{
   fontFamily: 'Gilroy-SemiBold',
   fontSize: 18,
   color: "white",
+},
+flat:{
+  alignItems: 'flex-start',
+},
+itemText:{
+  fontSize: 20,
 },
 });
 

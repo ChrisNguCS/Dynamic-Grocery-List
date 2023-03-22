@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
-import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Pressable } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Pressable, FlatList } from 'react-native';
 import { Stack } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { db } from '../firebaseConfig';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
-
+import DeleteItem from '../components/delItem/DeleteItem'
+import ListItem from '../components/listItem/ListItem'
 import styles from '../components/listItem/listItem.style';
 import Settings from "../assets/svg/settings.svg";
 import AddItemIcon from '../assets/svg/addItemIcon.svg';
-import { async } from '@firebase/util';
-import { Button } from 'react-native-web';
+import Unchecked from "../assets/svg/unchecked.svg";
+
 
 const List = () => {
     const Tab = createBottomTabNavigator();
@@ -25,13 +26,40 @@ const List = () => {
     }
 
     const [items, setItems] = useState([]);
-    const [item, setItem] = useState({ itemName: "" });
+    const [itemVal, setItem] = useState({ itemName: "" });
+    const [loading, setLoading] = useState(false);
+
+    const renderItem = ({item}) => (
+        <View style = {styles.item}>
+            <ListItem text={item.itemName}></ListItem>
+            <DeleteItem id = {item.id} />
+            {/* <text>{item.itemName}</text> */}
+        </View>
+    )
+
+
+    useEffect(() => {
+        setLoading(true)
+        const itemsQuery = collection(db, 'items')
+        onSnapshot(itemsQuery, (snapshot) => {
+            let itemsList = []
+            snapshot.docs.map((doc) => itemsList.push({...doc.data(), id: doc.id}))
+            setItems(itemsList)
+            setLoading(false)
+        })
+    }, []);
+
     function addItem() {
         const itemDb = collection(db, 'items')
         addDoc(itemDb,{
-            itemName: item.itemName,
+            itemName: itemVal.itemName,
             itemDone: false,
         })
+    }
+
+    function deleteItem(id){
+        const itemEntry = doc(db, 'items', id)
+        deleteDoc(itemEntry)
     }
     // const addItem = async () => {
     //     const doc = addDoc(collection(db, 'item'), {title: 'test', done: false})
@@ -52,17 +80,24 @@ return(
         />
 
 
-    <ScrollView contentContainerStyle = {{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+    <View contentContainerStyle = {{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
         <View style={styles.tasksWrapper}>
             <Text style={styles.sectionTitle}>My List</Text>
+            <FlatList
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        styles = {styles.flat}
+    />
         </View>
-    </ScrollView>
+    </View>
+
     <KeyboardAvoidingView 
         keyboardVerticalOffset={60 + 47}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
     >
-        <TextInput style={styles.input} placeholder={'Write a task'} placeholderTextColor="#B7B7B7" onChangeText={text => setItem({...item, itemName: text})}/>
+        <TextInput style={styles.input} placeholder={'Write a list item'} placeholderTextColor="#B7B7B7" onChangeText={text => setItem({...itemVal, itemName: text})}/>
         {/* add item button */}
         <TouchableOpacity onPress={addItem}>
             <View style={styles.addWrapper}>

@@ -15,7 +15,8 @@ const SignUp = () => {
         <View style= {styles.container}>
             <Stack.Screen
                 options = {{
-                    headerShown: false,
+                    headerShown: true,
+                    headerTitle: ''
                 }}
 
             />
