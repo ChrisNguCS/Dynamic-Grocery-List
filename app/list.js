@@ -1,16 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Pressable, FlatList } from 'react-native';
+import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, FlatList } from 'react-native';
 import { Stack } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { db } from '../firebaseConfig';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
-import { initializeApp } from "firebase/app";
 import DeleteItem from '../components/delItem/DeleteItem'
 import ListItem from '../components/listItem/ListItem'
 import styles from '../components/listItem/listItem.style';
 import Settings from "../assets/svg/settings.svg";
 import AddItemIcon from '../assets/svg/addItemIcon.svg';
-import Unchecked from "../assets/svg/unchecked.svg";
 
 
 const List = () => {
@@ -19,7 +17,8 @@ const List = () => {
     function MyTabs() {
         return (
         <Tab.Navigator>
-            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Explore" component={{ExploreScreen}}
+            <Tab.Screen name="Lists" component={HomeScreen} />
             <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
         );
@@ -84,11 +83,11 @@ return(
         <View style={styles.tasksWrapper}>
             <Text style={styles.sectionTitle}>My List</Text>
             <FlatList
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        styles = {styles.flat}
-    />
+                data={items}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                styles = {styles.flat}
+            />
         </View>
     </View>
 
@@ -97,7 +96,11 @@ return(
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
     >
-        <TextInput style={styles.input} placeholder={'Write a list item'} placeholderTextColor="#B7B7B7" onChangeText={text => setItem({...itemVal, itemName: text})}/>
+        <TextInput style={styles.input} 
+        placeholder={'Write a list item'} 
+        placeholderTextColor="#B7B7B7" 
+        onChangeText={text => setItem({...itemVal, itemName: text})}/>
+        
         {/* add item button */}
         <TouchableOpacity onPress={addItem}>
             <View style={styles.addWrapper}>

@@ -43,11 +43,7 @@ const router = useRouter();
           <LargeButton text = {'Login'}/>
         </TouchableOpacity>
       </Link>
-      {/* <TouchableOpacity onPress={() => {
-        router.push("/list")
-      }}>
-          <LargeButton text = {'Login'} />
-      </TouchableOpacity> */}
+
       <Link href="/signUp" asChild >
         <TouchableOpacity>
           <LargeButton text = {'Sign Up'}/>
