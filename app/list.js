@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, FlatList } from 'react-native';
 import { Stack } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { db } from '../firebaseConfig';
+import { db } from '../';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import DeleteItem from '../components/delItem/DeleteItem'
 import ListItem from '../components/listItem/ListItem'
@@ -17,7 +17,6 @@ const List = () => {
     function MyTabs() {
         return (
         <Tab.Navigator>
-            <Tab.Screen name="Explore" component={{ExploreScreen}}
             <Tab.Screen name="Lists" component={HomeScreen} />
             <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
