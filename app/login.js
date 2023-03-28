@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Stack, Link } from 'expo-router';
 import LargeButton from '../components/button/LargeButton';
+import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,6 +29,11 @@ const Login = () => {
             <Text style={styles.textStyle}>Password</Text>
             <TextInput style = {styles.input} textContentType = "password" placeholder='Password' onChangeText={text => setPassword(text)}/>
             <Text styles={styles.forgotPassword}>Forgot Password?</Text>
+            <View>
+                <Text>
+
+                </Text>
+            </View>
             <Link href="/list" asChild >
             <TouchableOpacity>
                 <LargeButton text = {'Log In'}/>
@@ -39,7 +46,7 @@ const Login = () => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        paddingTop: 230,
+        paddingTop: 150,
         paddingHorizontal: 30,
         alignItems: 'left',
         backgroundColor:'#ffffff'
@@ -68,7 +75,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         marginBottom: 20,
-        marginTop: 20,
+        marginTop: 10,
         fontSize: 58,
         width: 200,
     },
@@ -82,7 +89,7 @@ const styles = StyleSheet.create({
         color:'#7C7C7C'
     },
     forgotPassword:{
-        marginBottom: 40,
+        marginBottom: 10,
     }
 })
 

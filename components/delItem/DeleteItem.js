@@ -3,6 +3,8 @@ import { Text, View, Pressable } from "react-native"
 import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../firebaseConfig.js"
 import Unchecked from "../../assets/svg/unchecked.svg";
+import styles from "../listItem/listItem.style";
+
 
 export default function DeleteUser({ id }) {
   function deleteItem() {
@@ -11,7 +13,7 @@ export default function DeleteUser({ id }) {
   }
 
   return (
-    <View>
+    <View style={styles.delItem}>
       <Pressable onPress={deleteItem}>
       <Unchecked width = {40} height = {40}/>
       </Pressable>

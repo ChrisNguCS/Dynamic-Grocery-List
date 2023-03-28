@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, FlatList } from 'react-native';
 import { Stack } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { db } from '../';
+import { db } from '../firebaseConfig';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import DeleteItem from '../components/delItem/DeleteItem'
 import ListItem from '../components/listItem/ListItem'
@@ -53,16 +53,14 @@ const List = () => {
             itemName: itemVal.itemName,
             itemDone: false,
         })
+        Keyboard.dismiss();
     }
 
     function deleteItem(id){
         const itemEntry = doc(db, 'items', id)
         deleteDoc(itemEntry)
     }
-    // const addItem = async () => {
-    //     const doc = addDoc(collection(db, 'item'), {title: 'test', done: false})
-    //     console.log("test");
-    // };
+
 return(
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FCFCFC'}}>
             <Stack.Screen
