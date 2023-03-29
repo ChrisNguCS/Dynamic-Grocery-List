@@ -6,7 +6,7 @@ import { db } from '../firebaseConfig';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import DeleteItem from '../components/delItem/DeleteItem'
 import ListItem from '../components/listItem/ListItem'
-import styles from '../components/listItem/listItem.style';
+import styles from '../styles/style';
 import Settings from "../assets/svg/settings.svg";
 import AddItemIcon from '../assets/svg/addItemIcon.svg';
 
@@ -35,7 +35,7 @@ const List = () => {
         </View>
     )
 
-
+    // Load items from firebase
     useEffect(() => {
         setLoading(true)
         const itemsQuery = collection(db, 'items')
@@ -47,6 +47,7 @@ const List = () => {
         })
     }, []);
 
+    //add items to firebase
     function addItem() {
         const itemDb = collection(db, 'items')
         addDoc(itemDb,{
@@ -56,6 +57,7 @@ const List = () => {
         Keyboard.dismiss();
     }
 
+    //delete items from firebase
     function deleteItem(id){
         const itemEntry = doc(db, 'items', id)
         deleteDoc(itemEntry)
@@ -63,6 +65,7 @@ const List = () => {
 
 return(
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FCFCFC'}}>
+            {/* Header */}
             <Stack.Screen
                 options = {{
                     headerStyle: { backgroundColor: '#FFFFFF'},
@@ -75,8 +78,9 @@ return(
                 }}
         />
 
-
+    
     <View contentContainerStyle = {{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+        {/* Task items */}
         <View style={styles.tasksWrapper}>
             <Text style={styles.sectionTitle}>My List</Text>
             <FlatList
@@ -87,7 +91,8 @@ return(
             />
         </View>
     </View>
-
+    
+    {/* List input */}
     <KeyboardAvoidingView 
         keyboardVerticalOffset={60 + 47}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

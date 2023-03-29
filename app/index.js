@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
 import * as Svg from 'react-native-svg';
 import LargeButton from '../components/button/LargeButton';
-import styles from '../components/listItem/listItem.style';
+import styles from '../styles/style';
 
 
 

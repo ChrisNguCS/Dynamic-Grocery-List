@@ -16,8 +16,11 @@ const Login = () => {
         <View style= {styles.container}>
             <Stack.Screen
                 options = {{
-                    headerShown: true,
-                    headerTitle: ''
+                    headerStyle: { backgroundColor: '#FFFFFF'},
+                    headerShadowVisible: true,
+                    headerTitle: '',
+                    headerTitleStyle: {fontSize: 20},
+                    headerBackTitle: 'back',
                 }}
 
             />
@@ -25,9 +28,9 @@ const Login = () => {
             <Text style={styles.sectionTitle}>Log In</Text>
             <Text style={styles.subHeader}>Enter your email and password</Text>
             <Text style={styles.textStyle}>Email</Text>
-            <TextInput style = {styles.input} placeholder='Email' onChangeText={text => setEmail(text)}/>
+            <TextInput style = {styles.input} placeholder='' onChangeText={text => setEmail(text)}/>
             <Text style={styles.textStyle}>Password</Text>
-            <TextInput style = {styles.input} textContentType = "password" placeholder='Password' onChangeText={text => setPassword(text)}/>
+            <TextInput style = {styles.input} textContentType = "password" onChangeText={text => setPassword(text)}/>
             <Text styles={styles.forgotPassword}>Forgot Password?</Text>
             <View>
                 <Text>

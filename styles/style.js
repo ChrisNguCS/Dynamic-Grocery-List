@@ -12,7 +12,7 @@ item: {
     justifyContent: 'space-between',
     marginBottom: 20,
     borderColor: "#53B175",
-    borderWidth: 1,
+    borderWidth: 0,
 },
 itemRight: {
     flexDirection: 'row',
@@ -31,7 +31,7 @@ tasksWrapper: {
   paddingHorizontal: 20,
 },
 sectionTitle: {
-  fontSize: 24,
+  fontSize: 30,
   fontWeight: 'bold'
 },
 items: {
@@ -88,6 +88,8 @@ flat:{
 },
 itemText:{
   fontSize: 20,
+  marginTop: 20,
+  borderColor: '#AAAAAA',
 },
 delItem:{
   justifyContent: 'center'

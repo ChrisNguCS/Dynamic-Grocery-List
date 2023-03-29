@@ -27,8 +27,8 @@ const SignUp = () => {
             <TextInput style = {styles.input} placeholder='Email' onChangeText={text => setEmail(text)}/>
             <Text style={styles.textStyle}>Password</Text>
             <TextInput style = {styles.input} textContentType = "password" placeholder='Password' onChangeText={text => setPassword(text)}/>
-            <Text styles={styles.subHeader}>By continuing you agree to our Terms of Service
-            and Privacy Policy.</Text>
+            {/* <Text styles={styles.subHeader}>By continuing you agree to our Terms of Service
+            and Privacy Policy.</Text> */}
             <Link href="/" asChild >
             <TouchableOpacity>
                 <LargeButton text = {'Sign Up'}/>
@@ -42,7 +42,7 @@ const SignUp = () => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        paddingTop: 230,
+        paddingTop: 150,
         paddingHorizontal: 30,
         alignItems: 'left',
         backgroundColor:'#ffffff'

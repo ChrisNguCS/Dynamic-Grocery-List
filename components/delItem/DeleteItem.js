@@ -3,7 +3,7 @@ import { Text, View, Pressable } from "react-native"
 import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../firebaseConfig.js"
 import Unchecked from "../../assets/svg/unchecked.svg";
-import styles from "../listItem/listItem.style";
+import styles from "../../styles/style";
 
 
 export default function DeleteUser({ id }) {
