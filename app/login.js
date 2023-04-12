@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Stack, Link } from 'expo-router';
 import LargeButton from '../components/button/LargeButton';
 import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -11,6 +12,15 @@ const Login = () => {
 
     const signUp = async () => {};
     const signIn = async () => {};
+    const auth = getAuth();
+    const handleLogin= () => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then(userCredentials => {
+            const user = userCredentials.user;
+            console.log(user.email);
+        })
+        .catch(error => alert(error.message))
+    }
 
     return (
         <View style= {styles.container}>
@@ -28,9 +38,15 @@ const Login = () => {
             <Text style={styles.sectionTitle}>Log In</Text>
             <Text style={styles.subHeader}>Enter your email and password</Text>
             <Text style={styles.textStyle}>Email</Text>
-            <TextInput style = {styles.input} placeholder='' onChangeText={text => setEmail(text)}/>
+            <TextInput style = {styles.input} 
+                placeholder='' 
+                value={email}
+                onChangeText={text => setEmail(text)}/>
             <Text style={styles.textStyle}>Password</Text>
-            <TextInput style = {styles.input} textContentType = "password" onChangeText={text => setPassword(text)}/>
+            <TextInput style = {styles.input} 
+                value={password} 
+                secureTextEntry
+                onChangeText={text => setPassword(text)}/>
             <Text styles={styles.forgotPassword}>Forgot Password?</Text>
             <View>
                 <Text>
@@ -38,7 +54,7 @@ const Login = () => {
                 </Text>
             </View>
             <Link href="/list" asChild >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleLogin}>
                 <LargeButton text = {'Log In'}/>
             </TouchableOpacity>
             </Link>

@@ -3,16 +3,44 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Stack, Link } from 'expo-router';
 import LargeButton from '../components/button/LargeButton';
+// import { auth } from '../firebaseConfig'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import CheckIcon from '../assets/svg/check.svg';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [checkValidEmail, setCheckValidEmail] = useState(false);
 
     const signUp = async () => {};
     const signIn = async () => {};
 
+    // Sign up function
+    const auth = getAuth();
+    const handleSignUp = () => {
+            createUserWithEmailAndPassword(auth, email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log(user.email);
+            })
+            .catch(error => alert(error.message))
+    }
+
+    const handleCheckEmail = text => {
+        let re = /\S+@\S+\.\S+/;
+        let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    
+        setEmail(text);
+        if (re.test(text) || regex.test(text)) {
+            setCheckValidEmail(false);
+        } else {
+            setCheckValidEmail(true);
+        }
+    };
+
     return (
         <View style= {styles.container}>
+            {/* Header */}
             <Stack.Screen
                 options = {{
                     headerShown: true,
@@ -21,16 +49,37 @@ const SignUp = () => {
 
             />
 
+            {/* Titles */}
             <Text style={styles.sectionTitle}>Sign Up</Text>
             <Text style={styles.subHeader}>Enter your email and password</Text>
+
+            {/* Email Input */}
             <Text style={styles.textStyle}>Email</Text>
-            <TextInput style = {styles.input} placeholder='Email' onChangeText={text => setEmail(text)}/>
+            <View style={styles.inputWrapper}>
+            <TextInput style = {styles.input} 
+                placeholder='' 
+                value={email}
+                onChangeText={text => handleCheckEmail(text)}/>
+            {checkValidEmail ? (
+                <Text></Text>
+            ) : (
+                <CheckIcon width={30} height={30}/>
+            )}
+
+            </View>
+
+            {/* Password Input */}
             <Text style={styles.textStyle}>Password</Text>
-            <TextInput style = {styles.input} textContentType = "password" placeholder='Password' onChangeText={text => setPassword(text)}/>
+            <TextInput style = {styles.input} 
+                value={password} 
+                secureTextEntry
+                onChangeText={text => setPassword(text)}/>
             {/* <Text styles={styles.subHeader}>By continuing you agree to our Terms of Service
             and Privacy Policy.</Text> */}
-            <Link href="/" asChild >
-            <TouchableOpacity>
+            
+            {/* Sign Up Button */}
+            <Link href="/login" asChild >
+            <TouchableOpacity onPress={handleSignUp}>
                 <LargeButton text = {'Sign Up'}/>
             </TouchableOpacity>
             </Link>
@@ -50,9 +99,14 @@ const styles = StyleSheet.create({
     textStyle:{
         color:'#7C7C7C'
     },
-    input:{
+    inputWrapper:{
+        width: "100%",
+        flexDirection: 'row',
         paddingVertical: 15,
         paddingHorizontal: 10,
+    },
+    input:{
+
         marginBottom: 30,
         backgroundColor: '#ffffff',
         borderColor: '#E2E2E2',

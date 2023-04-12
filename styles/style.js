@@ -24,11 +24,13 @@ container: {
     alignItems: 'center',
     backgroundColor: '#FCFCFC',
     paddingHorizontal: 30,
+    
 
 },
 tasksWrapper: {
   paddingTop: 20,
   paddingHorizontal: 20,
+  
 },
 sectionTitle: {
   fontSize: 30,
@@ -36,6 +38,7 @@ sectionTitle: {
 },
 items: {
   marginTop: 30,
+  
 },
 writeTaskWrapper: {
     position: 'absolute',
@@ -43,7 +46,8 @@ writeTaskWrapper: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
+
 },
 input: {
   paddingVertical: 15,
@@ -67,7 +71,6 @@ addWrapper: {
 },
 addText: {},
 LargeButton:{
-
   backgroundColor: '#53B175',
   padding: 25,
   borderRadius: 10,

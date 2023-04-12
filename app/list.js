@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, FlatList } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, Link } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { db } from '../firebaseConfig';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
@@ -11,6 +11,7 @@ import Settings from "../assets/svg/settings.svg";
 import AddItemIcon from '../assets/svg/addItemIcon.svg';
 
 
+//Bottom navigation bar
 const List = () => {
     const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ const List = () => {
         })
     }, []);
 
-    //add items to firebase
+    //Add items to firebase
     function addItem() {
         const itemDb = collection(db, 'items')
         addDoc(itemDb,{
@@ -57,7 +58,7 @@ const List = () => {
         Keyboard.dismiss();
     }
 
-    //delete items from firebase
+    //Delete items from firebase
     function deleteItem(id){
         const itemEntry = doc(db, 'items', id)
         deleteDoc(itemEntry)
@@ -72,17 +73,26 @@ return(
                     headerShadowVisible: true,
                     headerTitle: '',
                     headerTitleStyle: {fontSize: 20},
+                    headerBackButtonMenuEnabled: false,
                     headerRight: () => (
-                        <Settings width = {20} height = {20}/>
+                        <Link href='/settings' asChild>
+                            <TouchableOpacity>
+                            <Settings width = {20} height = {20}/>
+                            </TouchableOpacity>
+                        </Link>
+
                     )
                 }}
         />
 
     
     <View contentContainerStyle = {{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
-        {/* Task items */}
         <View style={styles.tasksWrapper}>
+
+            {/* Task Title */}
             <Text style={styles.sectionTitle}>My List</Text>
+
+            {/* Task item list */}
             <FlatList
                 data={items}
                 renderItem={renderItem}
@@ -98,12 +108,14 @@ return(
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
     >
+        {/* Item name input box */}
         <TextInput style={styles.input} 
         placeholder={'Write a list item'} 
         placeholderTextColor="#B7B7B7" 
         onChangeText={text => setItem({...itemVal, itemName: text})}/>
+
         
-        {/* add item button */}
+        {/* Add item button */}
         <TouchableOpacity onPress={addItem}>
             <View style={styles.addWrapper}>
                 <AddItemIcon width = {60} height = {60}/>

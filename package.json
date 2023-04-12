@@ -20,7 +20,7 @@
     "metro-core": "^0.76.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.4",
+    "react-native": "0.71.6",
     "react-native-asset": "^2.1.0",
     "react-native-config": "^1.5.0",
     "react-native-dotenv": "^3.4.8",
