@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { Stack, Link } from 'expo-router';
+import { Stack, Link, useRouter, userSegments } from 'expo-router';
 import LargeButton from '../components/button/LargeButton';
 import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const valid = true;
     const signUp = async () => {};
     const signIn = async () => {};
     const auth = getAuth();
@@ -18,8 +19,9 @@ const Login = () => {
         .then(userCredentials => {
             const user = userCredentials.user;
             console.log(user.email);
+            router.replace("/list")
         })
-        .catch(error => alert(error.message))
+        .catch(error => Alert.alert("Invalid Email or Password"))
     }
 
     return (
@@ -53,11 +55,11 @@ const Login = () => {
 
                 </Text>
             </View>
-            <Link href="/list" asChild >
+            {/* <Link href="/list" asChild > */}
             <TouchableOpacity onPress={handleLogin}>
                 <LargeButton text = {'Log In'}/>
             </TouchableOpacity>
-            </Link>
+            {/* </Link> */}
         </View>
     );
 }

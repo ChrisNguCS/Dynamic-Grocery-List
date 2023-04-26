@@ -6,12 +6,13 @@ import * as SplashScreen from 'expo-splash-screen'
 import * as Svg from 'react-native-svg';
 import LargeButton from '../components/button/LargeButton';
 import styles from '../styles/style';
-
+import * as Application from 'expo-application';
 
 
 const Home = () => {
 const router = useRouter();
-
+// const id = Application.androidId;
+// console.log(id);
   let [fontsLoaded] = useFonts({
     "Gilroy-SemiBold": require("../assets/fonts/Gilroy-SemiBold.ttf")
   });

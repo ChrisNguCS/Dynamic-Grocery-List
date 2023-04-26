@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { Stack, Link } from 'expo-router';
+import { Stack, Link , useRouter} from 'expo-router';
 import LargeButton from '../components/button/LargeButton';
 // import { auth } from '../firebaseConfig'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -16,14 +16,16 @@ const SignUp = () => {
     const signIn = async () => {};
 
     // Sign up function
+    const router = useRouter();
     const auth = getAuth();
     const handleSignUp = () => {
             createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
                 console.log(user.email);
+                router.replace('/login')
             })
-            .catch(error => alert(error.message))
+            .catch(error => Alert.alert("Invalid Email or Password"))
     }
 
     const handleCheckEmail = text => {
@@ -78,11 +80,9 @@ const SignUp = () => {
             and Privacy Policy.</Text> */}
             
             {/* Sign Up Button */}
-            <Link href="/login" asChild >
             <TouchableOpacity onPress={handleSignUp}>
                 <LargeButton text = {'Sign Up'}/>
             </TouchableOpacity>
-            </Link>
             <Text styles={styles.textStyle}>Already have an account? Log In</Text>
         </View>
     );
