@@ -11,8 +11,8 @@ import * as Application from 'expo-application';
 
 const Home = () => {
 const router = useRouter();
-// const id = Application.androidId;
-// console.log(id);
+const id = Application.androidId;
+console.log(id);
   let [fontsLoaded] = useFonts({
     "Gilroy-SemiBold": require("../assets/fonts/Gilroy-SemiBold.ttf")
   });
