@@ -3,7 +3,7 @@ import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpa
 import { Stack, Link } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { db } from '../firebaseConfig';
-import { addDoc, collection, onSnapshot, doc, setDoc, get, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import DeleteList from '../components/delete/DeleteList'
 import ListItem from '../components/listItem/ListItem'
@@ -54,16 +54,25 @@ const ListMenu = () => {
         const listDoc = addDoc(listDB,{
             listID: '',
             listName: listVal.listName,
-            // listItems: [],
-            // listMembers: [getAuth().currentUser.uid],
+            listItems: [],
+            listMembers: [getAuth().currentUser.uid],
         })
     .then(
         function(docRef){
         const listRef = docRef.id;
         updateDoc(docRef, {
             listID: listRef
-        })
+        });
+        const listItemsRef = collection(db, 'lists', listRef, 'listItems');
+        const messageDoc = doc(listItemsRef, 'message');
+        getDoc(messageDoc).then((docSnapshot) => {
+        // Handle the document snapshot
+        });
+
+
     })
+    Keyboard.dismiss();
+
     }
 
     // collection(db, 'lists', listRef, 'listMembers');
@@ -73,8 +82,7 @@ const ListMenu = () => {
         // setDoc(doc(listDB, 'lists', documentId));
 
 
-        Keyboard.dismiss();
-    
+        
 
 return(
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FCFCFC'}}>
@@ -102,7 +110,7 @@ return(
         <View style={styles.tasksWrapper}>
 
             {/* Task Title */}
-            <Text style={styles.sectionTitle}>My List</Text>
+            <Text style={styles.sectionTitle}>My Lists</Text>
 
             {/* Task list list */}
             <FlatList
