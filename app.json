@@ -5,6 +5,20 @@
       "bundler": "metro"
     },
     "name": "Dynamic-Grocery-List",
-    "slug": "Dynamic-Grocery-List"
+    "slug": "Dynamic-Grocery-List",
+    "extra": {
+      "eas": {
+        "projectId": "24cc6bef-f3b0-4a9d-ac3b-53c32d5a392f"
+        
+      }
+    },
+    "android": {
+      "package": "com.chrisngu.DynamicGroceryList",
+      "googleServicesFile": "./google-services.json"
+    },
+    "ios": {
+      "bundleIdentifier": "com.chrisngu.DynamicGroceryList"
+    },
+    "plugins": ["@react-native-google-signin/google-signin"]
   }
 }

@@ -50,6 +50,12 @@ console.log(id);
           <LargeButton text = {'Sign Up'}/>
         </TouchableOpacity>
       </Link>
+{/* 
+      <Link href="/listMenu" asChild >
+        <TouchableOpacity>
+          <LargeButton text = {'secret'}/>
+        </TouchableOpacity>
+      </Link> */}
     </View>
   );
 };

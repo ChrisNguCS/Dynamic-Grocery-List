@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Stack, Link, useRouter, userSegments } from 'expo-router';
 import LargeButton from '../components/button/LargeButton';
@@ -23,9 +23,9 @@ const Login = () => {
         })
         .catch(error => Alert.alert("Invalid Email or Password"))
     }
-
+    // const KeyboardAvoidingComponent = () => {
     return (
-        <View style= {styles.container}>
+        <KeyboardAvoidingView style= {styles.container}>
             <Stack.Screen
                 options = {{
                     headerStyle: { backgroundColor: '#FFFFFF'},
@@ -60,8 +60,9 @@ const Login = () => {
                 <LargeButton text = {'Log In'}/>
             </TouchableOpacity>
             {/* </Link> */}
-        </View>
+        </KeyboardAvoidingView>
     );
+// };
 }
 
 const styles = StyleSheet.create({
@@ -69,7 +70,6 @@ const styles = StyleSheet.create({
         flex:1,
         paddingTop: 150,
         paddingHorizontal: 30,
-        alignItems: 'left',
         backgroundColor:'#ffffff'
     },
     textStyle:{

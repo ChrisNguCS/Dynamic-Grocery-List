@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "81022263522",
+    "project_id": "dynamic-grocery-app",
+    "storage_bucket": "dynamic-grocery-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81022263522:android:248f3e9c50d07561febebb",
+        "android_client_info": {
+          "package_name": "com.dynamicgrocerylist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81022263522-b5boef9nkoicttnmdr5v5nn0iipttaih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dynamicgrocerylist",
+            "certificate_hash": "a0263e3c0e5611c8d016ccd842031a5e4391e1e7"
+          }
+        },
+        {
+          "client_id": "81022263522-qbg5qlqencooauu8vedoifouqrgoj98v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dynamicgrocerylist",
+            "certificate_hash": "8fa71cfeca242f34179a234b078f4006b3f007c2"
+          }
+        },
+        {
+          "client_id": "81022263522-tjorrimr419sh0hpgffooac9hef3umst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGUqCJT5Zv3udBhbHnqXFZN-HuPQhHltg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81022263522-q3oc1814ehahcvhcveuou9oglamuce7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

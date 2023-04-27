@@ -3,9 +3,9 @@ import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpa
 import { Stack, Link } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { db } from '../firebaseConfig';
-import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, doc, setDoc, get, updateDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import DeleteItem from '../components/delete/DeleteItem'
+import DeleteList from '../components/delete/DeleteList'
 import ListItem from '../components/listItem/ListItem'
 import styles from '../styles/style';
 import Settings from "../assets/svg/settings.svg";
@@ -13,70 +13,68 @@ import AddItemIcon from '../assets/svg/addItemIcon.svg';
 
 
 //Bottom navigation bar
-const List = () => {
-    const Tab = createBottomTabNavigator();
-
-    function MyTabs() {
-        return (
-        <Tab.Navigator>
-            <Tab.Screen name="Lists" component={HomeScreen} />
-            <Tab.Screen name="Settings" component={SettingsScreen} />
-        </Tab.Navigator>
-        );
-    }
-
-    const [items, setItems] = useState([]);
-    const [itemVal, setItem] = useState({ itemName: "" });
+const ListMenu = () => {
+    const [lists, setLists] = useState([]);
+    const [listVal, setList] = useState({ listName: "" });
     const [loading, setLoading] = useState(false);
 
     const renderItem = ({item}) => (
         <View style = {styles.item}>
-            <ListItem text={item.itemName}></ListItem>
-            <DeleteItem id = {item.id} />
-            {/* <text>{item.itemName}</text> */}
+            <ListItem text={item.listName}></ListItem>
+            <DeleteList id = {item.id} />
+            {/* <text>{list.listName}</text> */}
         </View>
     )
 
     // Load items from firebase
     useEffect(() => {
         setLoading(true)
-        const itemsQuery = collection(db, 'items')
-        onSnapshot(itemsQuery, (snapshot) => {
-            let itemsList = []
-            snapshot.docs.map((doc) => itemsList.push({...doc.data(), id: doc.id}))
-            setItems(itemsList)
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+            const uid = user.uid;
+            console.log(uid)
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+        const listQuery = collection(db, 'lists')
+        onSnapshot(listQuery, (snapshot) => {
+            let listsList = []
+            snapshot.docs.map((doc) => listsList.push({...doc.data(), id: doc.id}))
+            setLists(listsList)
             setLoading(false)
         })
     }, []);
 
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        // ...
-        } else {
-            // User is signed out
-            // ...
-        }
-    });
-
     //Add items to firebase
-    function addItem() {
-        const itemDb = collection(db, 'items')
-        addDoc(itemDb,{
-            itemName: itemVal.itemName,
-            itemDone: false,
+    async function addList() {
+        const listDB = collection(db, 'lists')
+        const listDoc = addDoc(listDB,{
+            listID: '',
+            listName: listVal.listName,
+            // listItems: [],
+            // listMembers: [getAuth().currentUser.uid],
         })
-        Keyboard.dismiss();
+    .then(
+        function(docRef){
+        const listRef = docRef.id;
+        updateDoc(docRef, {
+            listID: listRef
+        })
+    })
     }
 
-    //Delete items from firebase
-    function deleteItem(id){
-        const itemEntry = doc(db, 'items', id)
-        deleteDoc(itemEntry)
-    }
+    // collection(db, 'lists', listRef, 'listMembers');
+
+        
+        
+        // setDoc(doc(listDB, 'lists', documentId));
+
+
+        Keyboard.dismiss();
+    
 
 return(
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FCFCFC'}}>
@@ -106,11 +104,11 @@ return(
             {/* Task Title */}
             <Text style={styles.sectionTitle}>My List</Text>
 
-            {/* Task item list */}
+            {/* Task list list */}
             <FlatList
-                data={items}
+                data={lists}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(list) => list.id}
                 styles = {styles.flat}
             />
         </View>
@@ -124,13 +122,13 @@ return(
     >
         {/* Item name input box */}
         <TextInput style={styles.input} 
-        placeholder={'Write a list item'} 
+        placeholder={'Write a list'} 
         placeholderTextColor="#B7B7B7" 
-        onChangeText={text => setItem({...itemVal, itemName: text})}/>
+        onChangeText={text => setList({...listVal, listName: text})}/>
 
         
-        {/* Add item button */}
-        <TouchableOpacity onPress={addItem}>
+        {/* Add list button */}
+        <TouchableOpacity onPress={addList}>
             <View style={styles.addWrapper}>
                 <AddItemIcon width = {60} height = {60}/>
             </View>
@@ -141,4 +139,4 @@ return(
     
 );
 };
-export default List;
+export default ListMenu;
