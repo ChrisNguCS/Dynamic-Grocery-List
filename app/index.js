@@ -1,10 +1,12 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import { React, useEffect } from 'react';
 import { Stack, useRouter, Link } from 'expo-router';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
 import * as Svg from 'react-native-svg';
 import LargeButton from '../components/button/LargeButton';
+import GoogleButton from '../components/button/GoogleButton';
+import Google from '../assets/svg/Google'
 import styles from '../styles/style';
 import * as Application from 'expo-application';
 
@@ -51,11 +53,14 @@ console.log(id);
         </TouchableOpacity>
       </Link>
 
-      <Link href="/listMenu" asChild >
-        <TouchableOpacity>
-          <LargeButton text = {'secret'}/>
+      {/* <Link href="/index" asChild > */}
+        <TouchableOpacity onPress={() => {
+          Linking.openURL('https://accounts.google.com/v3/signin/identifier?dsh=S-200610498%3A1682824985316625&continue=https%3A%2F%2Fwww.google.com%3Fhl%3Den-US&ec=GAlA8wE&hl=en&flowName=GlifWebSignIn&flowEntry=AddSession')
+        }}>
+          <GoogleButton text = {'Continue with Google'}/>
+          
         </TouchableOpacity>
-      </Link>
+      {/* </Link> */}
     </View>
   );
 };

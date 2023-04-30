@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, FlatList } from 'react-native';
+import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, Pressable, TouchableOpacity, Keyboard, ScrollView, FlatList, Alert } from 'react-native';
 import { Stack, Link } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { db } from '../firebaseConfig';
@@ -89,11 +89,9 @@ return(
                     headerTitleStyle: {fontSize: 20},
                     headerBackButtonMenuEnabled: false,
                     headerRight: () => (
-                        <Link href='/settings' asChild>
-                            <TouchableOpacity>
+                        // <Link href='/settings' asChild>
                             <Settings width = {20} height = {20}/>
-                            </TouchableOpacity>
-                        </Link>
+                        // {/* </Link> */}
 
                     )
                 }}
@@ -104,7 +102,7 @@ return(
         <View style={styles.tasksWrapper}>
 
             {/* Task Title */}
-            <Text style={styles.sectionTitle}>My List</Text>
+            <Text style={styles.sectionTitle}>Test List</Text>
 
             {/* Task item list */}
             <FlatList

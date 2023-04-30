@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { SafeAreaView, KeyboardAvoidingView, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, FlatList } from 'react-native';
 import { Stack, Link } from 'expo-router';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { db } from '../firebaseConfig';
 import { addDoc, collection, onSnapshot, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import DeleteList from '../components/delete/DeleteList'
-import ListItem from '../components/listItem/ListItem'
+import ListList from '../components/listItem/ListList'
 import styles from '../styles/style';
 import Settings from "../assets/svg/settings.svg";
 import AddItemIcon from '../assets/svg/addItemIcon.svg';
+import Unchecked from '../assets/svg/unchecked.svg';
 
 
 //Bottom navigation bar
@@ -19,9 +19,18 @@ const ListMenu = () => {
     const [loading, setLoading] = useState(false);
 
     const renderItem = ({item}) => (
-        <View style = {styles.item}>
-            <ListItem text={item.listName}></ListItem>
-            <DeleteList id = {item.id} />
+        
+        <View style = {styles.list}>
+        
+            <ListList text={item.listName}></ListList>
+            <Link href='/list' asChild>
+            <TouchableOpacity>
+            <View style={styles.delItem}>
+            <AddItemIcon width = {50} height = {50}/>
+            </View>
+            </TouchableOpacity>
+            </Link>
+            
             {/* <text>{list.listName}</text> */}
         </View>
     )
@@ -33,10 +42,11 @@ const ListMenu = () => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
             const uid = user.uid;
-            console.log(uid)
+            console.log(uid);
             } else {
                 // User is signed out
                 // ...
+            
             }
         });
         const listQuery = collection(db, 'lists')
@@ -50,6 +60,7 @@ const ListMenu = () => {
 
     //Add items to firebase
     async function addList() {
+
         const listDB = collection(db, 'lists')
         const listDoc = addDoc(listDB,{
             listID: '',
@@ -63,27 +74,12 @@ const ListMenu = () => {
         updateDoc(docRef, {
             listID: listRef
         });
-        const listItemsRef = collection(db, 'lists', listRef, 'listItems');
-        const messageDoc = doc(listItemsRef, 'message');
-        getDoc(messageDoc).then((docSnapshot) => {
-        // Handle the document snapshot
-        });
-
-
+        addDoc(collection(db, 'lists', listRef, 'test',{
+            test: 'ire'}))
     })
+
     Keyboard.dismiss();
-
     }
-
-    // collection(db, 'lists', listRef, 'listMembers');
-
-        
-        
-        // setDoc(doc(listDB, 'lists', documentId));
-
-
-        
-
 return(
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FCFCFC'}}>
             {/* Header */}
@@ -94,6 +90,7 @@ return(
                     headerTitle: '',
                     headerTitleStyle: {fontSize: 20},
                     headerBackButtonMenuEnabled: false,
+                    headerBackTitle: 'Hey',
                     headerRight: () => (
                         <Link href='/settings' asChild>
                             <TouchableOpacity>

@@ -19,7 +19,7 @@ const Login = () => {
         .then(userCredentials => {
             const user = userCredentials.user;
             console.log(user.email);
-            router.replace("/list")
+            router.replace("/listMenu")
         })
         .catch(error => Alert.alert("Invalid Email or Password"))
     }
